@@ -43,3 +43,6 @@ task buildSpringServer(type: org.openapitools.generator.gradle.plugin.tasks.Gene
 
 // buildSpringServer won't be called when I click other->compileJava if I didn't write code below.
 compileJava.dependsOn tasks.buildSpringServer
+
+//  To import generated files
+sourceSets.main.java.srcDir "$buildDir/spring/src/main/java"
