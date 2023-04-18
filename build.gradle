@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.10'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "org.openapi.generator" version "6.3.0"
 }
 
 group = 'com.example'
@@ -20,3 +21,25 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+// To create API document
+task buildAPIDoc(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
+	generatorName = "html2"
+	inputSpec = "$rootDir/src/main/resources/api-schema.yml".toString()
+	outputDir = "$buildDir/apidoc".toString()
+}
+
+// 1. Gradle->Tasks->other->buildSpringServer
+// 2. HealthApi.java will be created
+task buildSpringServer(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
+	generatorName = "spring"
+	inputSpec = "$rootDir/src/main/resources/api-schema.yml".toString()
+	outputDir = "$buildDir/spring".toString()
+	apiPackage = "com.example.todoapi.controller"
+	modelPackage = "com.example.todoapi.model"
+	configOptions = [
+			interfaceOnly: "true"
+	]
+}
+
+// buildSpringServer won't be called when I click other->compileJava if I didn't write code below.
+compileJava.dependsOn tasks.buildSpringServer
