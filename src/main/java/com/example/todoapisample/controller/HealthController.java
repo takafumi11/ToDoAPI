@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HealthController implements HealthApi {
 // It is easy to write with Control+O
     @Override
-    @GetMapping("/health")
     public ResponseEntity<Void> healthGet() {
         return ResponseEntity.ok().build();
     }
