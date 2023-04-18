@@ -16,6 +16,9 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// These two are necessary libraries to launch TodoApiSampleApplication.java
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	compileOnly 'io.swagger.core.v3:swagger-annotations:2.0.0-rc4'
 }
 
 tasks.named('test') {
@@ -43,6 +46,5 @@ task buildSpringServer(type: org.openapitools.generator.gradle.plugin.tasks.Gene
 
 // buildSpringServer won't be called when I click other->compileJava if I didn't write code below.
 compileJava.dependsOn tasks.buildSpringServer
-
 //  To import generated files
 sourceSets.main.java.srcDir "$buildDir/spring/src/main/java"
